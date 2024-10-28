@@ -10,7 +10,7 @@
     "test": "vitest",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && patch-package",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "next": "15.0.1",
     "next-safe-action": "^7.9.8",
     "next-themes": "^0.3.0",
+    "patch-package": "^8.0.0",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0-rc2",
     "react": "^18",

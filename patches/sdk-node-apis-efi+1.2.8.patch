@@ -1,0 +1,14 @@
+diff --git a/node_modules/sdk-node-apis-efi/package.json b/node_modules/sdk-node-apis-efi/package.json
+index c02b697..6d2d168 100755
+--- a/node_modules/sdk-node-apis-efi/package.json
++++ b/node_modules/sdk-node-apis-efi/package.json
+@@ -5,7 +5,8 @@
+ 	"exports": {
+ 		".": {
+ 			"require": "./dist/cjs/index.cjs",
+-			"import": "./dist/cjs/index.cjs"
++			"import": "./dist/cjs/index.cjs",
++			"types": "./dist/types/index.d.ts"
+ 		}
+ 	},
+ 	"description": "Module for integration with Efi Bank API",
