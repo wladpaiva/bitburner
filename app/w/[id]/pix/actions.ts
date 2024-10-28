@@ -5,6 +5,7 @@ import { getBurnerLnbits } from "@/lib/lnbits";
 import { actionClient } from "@/lib/safe-action";
 import { requireWallet } from "@/lib/wallet";
 import { payPixActionSchema } from "@/schemas/pix";
+import { redirect } from "next/navigation";
 
 export const payPixAction = actionClient
   .schema(payPixActionSchema)
@@ -29,7 +30,5 @@ export const payPixAction = actionClient
       out: true,
     });
 
-    return {
-      success: false,
-    };
+    redirect(`/w/${wallet.id}/pix/${invoice.id}/pending`);
   });
