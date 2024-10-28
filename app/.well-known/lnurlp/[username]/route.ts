@@ -6,11 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ username: string }> }
 ) {
-  const { id } = await params;
+  const { username } = await params;
 
-  const burnerWallet = await requireWallet(id);
+  const burnerWallet = await requireWallet(username);
 
   const result = {
     status: "OK",
@@ -26,8 +26,6 @@ export async function GET(
       ],
     ]),
   };
-
-  console.log("🔥", result);
 
   return NextResponse.json(result);
 }
