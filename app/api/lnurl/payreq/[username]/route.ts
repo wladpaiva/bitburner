@@ -35,8 +35,8 @@ export async function GET(
       amount: amountMsats,
       memo: ``,
       //   metadata: [
-      //     ["text/plain", `Payment to ${wallet.id}`],
-      //     ["text/identifier", `${wallet.id}@${request.headers.get("host")}`],
+      //     ["text/plain", `Payment to ${wallet.username}`],
+      //     ["text/identifier", `${wallet.username}@${request.headers.get("host")}`],
       //   ]
     });
 

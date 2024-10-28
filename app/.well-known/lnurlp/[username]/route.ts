@@ -20,7 +20,7 @@ export async function GET(
       ["text/plain", `Pay on Bitburner`],
       [
         "text/identifier",
-        `${burnerWallet.id}@${new URL(NEXT_PUBLIC_URL).host}`,
+        `${burnerWallet.username}@${new URL(NEXT_PUBLIC_URL).host}`,
       ],
     ]),
   };
