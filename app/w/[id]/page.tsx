@@ -63,7 +63,7 @@ export default async function Page({
           className="flex flex-col items-center space-y-2 h-auto"
           asChild
         >
-          <Link href="/pix">
+          <Link href={`/w/${id}/pix`}>
             <div className="p-2 rounded-full bg-primary-foreground/10">
               <PixIcon className="h-6 w-6 text-white" />
             </div>
@@ -75,7 +75,7 @@ export default async function Page({
           className="flex flex-col items-center space-y-2 h-auto"
           asChild
         >
-          <Link href="/deposit">
+          <Link href={`/w/${id}/deposit`}>
             <div className="p-2 rounded-full bg-primary-foreground/10">
               <ArrowDownIcon className="h-6 w-6 text-white" />
             </div>
@@ -87,7 +87,7 @@ export default async function Page({
           className="flex flex-col items-center space-y-2 h-auto"
           asChild
         >
-          <Link href="/withdraw">
+          <Link href={`/w/${id}/withdraw`}>
             <div className="p-2 rounded-full bg-primary-foreground/10">
               <ArrowUpIcon className="h-6 w-6 text-white" />
             </div>
