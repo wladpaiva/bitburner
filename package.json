@@ -13,8 +13,11 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.21.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-radio-group": "^1.2.1",
     "@radix-ui/react-scroll-area": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@t3-oss/env-nextjs": "^0.11.1",
@@ -23,8 +26,9 @@
     "lnbits": "^1.1.5",
     "lucide-react": "^0.453.0",
     "next": "15.0.1",
-    "react": "19.0.0-rc-69d4b800-20241021",
-    "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.1",
     "sdk-node-apis-efi": "^1.2.8",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
