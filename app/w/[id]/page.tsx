@@ -6,7 +6,7 @@ import Link from "next/link";
 import { requireWallet } from "@/lib/wallet";
 import { getBurnerLnbits } from "@/lib/lnbits";
 import { getPrice } from "@/lib/price";
-import { formatSats, numberFormatter } from "@/lib/format";
+import { numberFormatter } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +38,7 @@ export default async function Page({
       id: transaction.checking_id,
       type: transaction.amount > 0 ? "deposit" : "withdraw",
       amount: transaction.amount,
+      memo: transaction.memo,
       date: new Date(transaction.time * 1000).toLocaleDateString(),
     }));
 
@@ -52,7 +53,10 @@ export default async function Page({
         <CardContent className="space-y-2">
           <p className="text-3xl font-bold">{formatter.format(balanceBRL)}</p>
           <p className="text-sm text-gray-500">
-            {formatSats(balanceInSats)} sats
+            {balanceInSats.toLocaleString("en-US", {
+              maximumFractionDigits: 0,
+            })}{" "}
+            sats
           </p>
         </CardContent>
       </Card>
@@ -115,7 +119,10 @@ export default async function Page({
                       <ArrowUpIcon className="mr-2 h-4 w-4 text-burnt" />
                     )}
                     <span>
-                      {transaction.type === "deposit" ? "Deposit" : "Withdraw"}
+                      {transaction.memo ??
+                        (transaction.type === "deposit"
+                          ? "Deposit"
+                          : "Withdraw")}
                     </span>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -126,8 +133,11 @@ export default async function Page({
                           : "text-burnt"
                       }
                     >
-                      {transaction.type === "deposit" ? "+" : "-"}
-                      {formatSats(transaction.amount / 1000)} sats
+                      {(transaction.amount / 1000).toLocaleString("en-US", {
+                        maximumFractionDigits: 0,
+                        signDisplay: "always",
+                      })}{" "}
+                      sats
                     </span>
                     <span className="text-gray-500 text-sm">
                       {transaction.date}
