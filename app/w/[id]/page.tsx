@@ -107,44 +107,50 @@ export default async function Page({
         <CardContent>
           <ScrollArea className="h-[300px]">
             <ul className="space-y-4">
-              {filteredTransactions.map((transaction) => (
-                <li
-                  key={transaction.id}
-                  className="flex justify-between items-center"
-                >
-                  <div className="flex items-center">
-                    {transaction.type === "deposit" ? (
-                      <ArrowDownIcon className="mr-2 h-4 w-4 text-emerald-400" />
-                    ) : (
-                      <ArrowUpIcon className="mr-2 h-4 w-4 text-burnt" />
-                    )}
-                    <span>
-                      {transaction.memo ??
-                        (transaction.type === "deposit"
-                          ? "Deposit"
-                          : "Withdraw")}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <span
-                      className={
-                        transaction.type === "deposit"
-                          ? "text-primary-foreground"
-                          : "text-burnt"
-                      }
-                    >
-                      {(transaction.amount / 1000).toLocaleString("en-US", {
-                        maximumFractionDigits: 0,
-                        signDisplay: "always",
-                      })}{" "}
-                      sats
-                    </span>
-                    <span className="text-gray-500 text-sm">
-                      {transaction.date}
-                    </span>
-                  </div>
+              {filteredTransactions.length === 0 ? (
+                <li className="text-center text-muted-foreground py-8">
+                  No transactions yet
                 </li>
-              ))}
+              ) : (
+                filteredTransactions.map((transaction) => (
+                  <li
+                    key={transaction.id}
+                    className="flex justify-between items-center"
+                  >
+                    <div className="flex items-center">
+                      {transaction.type === "deposit" ? (
+                        <ArrowDownIcon className="mr-2 h-4 w-4 text-emerald-400" />
+                      ) : (
+                        <ArrowUpIcon className="mr-2 h-4 w-4 text-burnt" />
+                      )}
+                      <span>
+                        {transaction.memo ??
+                          (transaction.type === "deposit"
+                            ? "Deposit"
+                            : "Withdraw")}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <span
+                        className={
+                          transaction.type === "deposit"
+                            ? "text-primary-foreground"
+                            : "text-burnt"
+                        }
+                      >
+                        {(transaction.amount / 1000).toLocaleString("en-US", {
+                          maximumFractionDigits: 0,
+                          signDisplay: "always",
+                        })}{" "}
+                        sats
+                      </span>
+                      <span className="text-gray-500 text-sm">
+                        {transaction.date}
+                      </span>
+                    </div>
+                  </li>
+                ))
+              )}
             </ul>
           </ScrollArea>
         </CardContent>
