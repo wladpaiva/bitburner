@@ -1,3 +1,4 @@
+import { NEXT_PUBLIC_URL } from "@/lib/env.client";
 import { prisma } from "@/lib/prisma";
 import { requireWallet } from "@/lib/wallet";
 import { headers } from "next/headers";
@@ -11,19 +12,18 @@ export async function GET(
 
   const burnerWallet = await requireWallet(id);
 
-  const headersList = await headers();
-  const domain = headersList.get("x-forwarded-host") || "";
-  const protocol = headersList.get("x-forwarded-proto") || "";
-
   const result = {
     status: "OK",
     tag: "payRequest",
-    callback: `${protocol}://${domain}/api/lnurl/payreq/${burnerWallet.id}`,
+    callback: `${NEXT_PUBLIC_URL}/api/lnurl/payreq/${burnerWallet.id}`,
     maxSendable: 250_000_000,
     minSendable: 1_000,
     metadata: JSON.stringify([
       ["text/plain", `Pay ${burnerWallet.id} on Bitburner`],
-      ["text/identifier", `${burnerWallet.id}@${domain}`],
+      [
+        "text/identifier",
+        `${burnerWallet.id}@${new URL(NEXT_PUBLIC_URL).host}`,
+      ],
     ]),
   };
 

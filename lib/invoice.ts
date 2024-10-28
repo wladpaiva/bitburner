@@ -3,7 +3,7 @@ import { fiatToSats, SPREAD_FACTOR } from "@/lib/price";
 import { prisma } from "@/lib/prisma";
 import { createHmac } from "@/lib/webhook";
 import { WEBHOOK_SECRET } from "@/lib/env.server";
-import { headers } from "next/headers";
+import { NEXT_PUBLIC_URL } from "./env.client";
 
 const HMAC = createHmac(WEBHOOK_SECRET, "lnbits");
 const EXPIRATION_TIME = 10 * 60; // 10 minutes
@@ -19,10 +19,6 @@ export async function createInvoice({
   pixKey: string;
   refundLnAddress?: string;
 }) {
-  const headersList = await headers();
-  const domain = headersList.get("x-forwarded-host") || "";
-  const protocol = headersList.get("x-forwarded-proto") || "";
-
   const sats = await fiatToSats(amount, "BRL");
   const amountSats = Math.round(sats * (1 + SPREAD_FACTOR));
 
@@ -33,7 +29,7 @@ export async function createInvoice({
 
     // @ts-expect-error -- missing types on lnbits but it's there on the api docs
     expiry: EXPIRATION_TIME,
-    webhook: `${protocol}://${domain}/api/webhook/lnbits?hmac=${HMAC}`,
+    webhook: `${NEXT_PUBLIC_URL}/api/webhook/lnbits?hmac=${HMAC}`,
   });
 
   // criar uma invoice com o pix
