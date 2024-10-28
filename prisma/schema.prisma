@@ -11,15 +11,18 @@ datasource db {
 }
 
 model Invoice {
-  id          String   @id @default(cuid())
-  paymentHash String   @unique
-  pixKey      String
-  pixType     String
+  id              String   @id @default(cuid())
+  paymentHash     String   @unique
+  paymentRequest  String
+  /// Lightning Address for refunds (eg. `username@domain.com`)
+  refundLnAddress String?
+  pixKey          String
+  pixType         String
   /// Amount in cents (BRL)
-  amountFiat  Int
+  amountFiat      Int
   /// Amount in sats
-  amountSats  Int
-  expiresAt   DateTime
+  amountSats      Int
+  expiresAt       DateTime
 
   // pixTransactionId is the id of the payment also known as `e2eId`
   pixTransactionId String? @unique

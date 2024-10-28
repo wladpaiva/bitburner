@@ -11,7 +11,7 @@ export const lnbits = LNBits({
   endpoint: LNBITS_ENDPOINT,
 });
 
-export const getBurnerLnbits = async (wallet: {
+export const getBurnerLnbits = (wallet: {
   adminKey: string;
   invoiceKey: string;
 }) => {
@@ -53,6 +53,17 @@ export const getBurnerLnbits = async (wallet: {
             "Content-Type": "application/json",
           }),
         }).then((res) => res.json());
+      },
+
+      getBalance: async () => {
+        const details = await lnbits.wallet.walletDetails();
+        const balanceInSats = details.balance / 1000;
+        const balanceInBTC = balanceInSats / 1e8;
+
+        return {
+          sats: balanceInSats,
+          btc: balanceInBTC,
+        };
       },
     },
   };

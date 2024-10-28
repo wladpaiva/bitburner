@@ -17,11 +17,11 @@ export default async function Page({
 }) {
   const { id } = await params;
   const wallet = await requireWallet(id);
-  const lnbits = await getBurnerLnbits(wallet);
+  const lnbits = getBurnerLnbits(wallet);
 
-  const details = await lnbits.wallet.walletDetails();
-  const balanceInSats = details.balance / 1000; // 1,000,000 sats
-  const balanceInBTC = balanceInSats / 1e8;
+  const balance = await lnbits.wallet.getBalance();
+  const balanceInSats = balance.sats;
+  const balanceInBTC = balance.btc;
 
   const price = await getPrice("BRL");
   const balanceBRL = Math.floor(balanceInBTC * price * 100) / 100;
