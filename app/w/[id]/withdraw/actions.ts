@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { actionClient } from "@/lib/safe-action";
 import { getBurnerLnbits } from "@/lib/lnbits";
 import { requireWallet } from "@/lib/wallet";

@@ -1,18 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { SubmitButton } from "@/components/submit-button";
-import { requireWallet } from "@/lib/wallet";
-import { getBurnerLnbits } from "@/lib/lnbits";
-import { withdrawAction } from "./actions";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { SubmitButton } from "@/components/submit-button";
+// import { requireWallet } from "@/lib/wallet";
+// import { getBurnerLnbits } from "@/lib/lnbits";
+// import { withdrawAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 
-export default async function WithdrawPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function WithdrawPage(
+  {
+    //   params,
+    // }: {
+    //   params: { id: string };
+  }
+) {
   return <div>TBD</div>;
   // TODO: implementar ação de withdraw
   //   const wallet = await requireWallet(params.id);
