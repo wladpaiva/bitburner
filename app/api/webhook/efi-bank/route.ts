@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { EFI_WEBHOOK_SECRET } from "@/lib/env.server";
+import { WEBHOOK_SECRET } from "@/lib/env.server";
 import { getIp, validateHmac } from "@/lib/webhook";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 const EFI_BANK_IP = "34.193.116.226";
 
+interface EfiPixTransaction {
+  endToEndId: string;
+  chave: string;
+  tipo: "SOLICITACAO";
+  status: "REALIZADO" | "DEVOLVIDO" | "NAO_REALIZADO";
+  valor: string;
+  horario: string;
+  gnExtras: Record<string, unknown>;
+}
+
 export async function POST(request: NextRequest) {
+  console.log("[EfiBank] Webhook received ");
+
   try {
     // Verificar o IP de origem
     if (process.env.NODE_ENV === "production") {
@@ -19,17 +32,41 @@ export async function POST(request: NextRequest) {
 
     // Validar o HMAC
     const requestUrl = request.url;
-    if (!validateHmac(requestUrl, EFI_WEBHOOK_SECRET)) {
+    if (!validateHmac(requestUrl, WEBHOOK_SECRET, "efibank")) {
       console.error(`Invalid HMAC for URL: ${requestUrl}`);
       return NextResponse.json({ error: "Invalid HMAC" }, { status: 403 });
     }
 
-    const body = (await request.json()) as {
-      evento: "teste_webhook";
-      data_criacao: string;
-    };
+    const body = await request.json();
 
-    console.log("Received webhook:", body);
+    if (body.evento === "teste_webhook") {
+      return NextResponse.json(
+        { message: "Webhook received successfully" },
+        { status: 200 }
+      );
+    }
+
+    if ("pix" in body && Array.isArray(body.pix)) {
+      await Promise.all(
+        (body.pix as EfiPixTransaction[])
+          .filter((pixTransaction) => pixTransaction.status === "REALIZADO")
+          .map(async (pixTransaction) => {
+            console.log(
+              "[EfiBank] Payment sent and confirmed for",
+              pixTransaction.endToEndId
+            );
+
+            return prisma.invoice.update({
+              where: {
+                pixTransactionId: pixTransaction.endToEndId,
+              },
+              data: {
+                pixPaidAt: new Date(pixTransaction.horario),
+              },
+            });
+          })
+      );
+    }
 
     return NextResponse.json(
       { message: "Webhook received successfully" },

@@ -9,3 +9,24 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Invoice {
+  id          String   @id @default(cuid())
+  paymentHash String   @unique
+  pixKey      String
+  pixType     String
+  /// Amount in cents (BRL)
+  amountFiat  Int
+  /// Amount in sats
+  amountSats  Int
+  expiresAt   DateTime
+
+  // pixTransactionId is the id of the payment also known as `e2eId`
+  pixTransactionId String? @unique
+
+  /// Status can be either `pending`, `lightning-settled`, or `completed`
+  lightningSettledAt DateTime?
+  pixPaidAt          DateTime?
+
+  createdAt DateTime @default(now())
+}

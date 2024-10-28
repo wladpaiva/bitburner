@@ -5,7 +5,10 @@ export const {
   EFI_CLIENT_ID,
   EFI_CLIENT_SECRET,
   EFI_PIX_CHAVE,
-  EFI_WEBHOOK_SECRET,
+  WEBHOOK_SECRET,
+  LNBITS_ADMIN_KEY,
+  LNBITS_INVOICE_READ_KEY,
+  LNBITS_ENDPOINT,
 } = createEnv({
   // Skip server env validation during build
   skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
@@ -13,7 +16,10 @@ export const {
     EFI_CLIENT_ID: z.string().min(1),
     EFI_CLIENT_SECRET: z.string().min(1),
     EFI_PIX_CHAVE: z.string().min(1),
-    EFI_WEBHOOK_SECRET: z.string().min(1),
+    WEBHOOK_SECRET: z.string().min(1),
+    LNBITS_ADMIN_KEY: z.string().min(1),
+    LNBITS_INVOICE_READ_KEY: z.string().min(1),
+    LNBITS_ENDPOINT: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });

@@ -1,11 +1,30 @@
 import { PrismaClient } from "@prisma/client";
 
+export type PixType = "cpf" | "cnpj" | "contaBanco" | "phone";
+
 // ==============================
 // Create the Prisma client
 
 const prismaClientSingleton = () => {
   const client = new PrismaClient();
-  return client;
+
+  return client.$extends({
+    result: {
+      invoice: {
+        status: {
+          needs: {
+            lightningSettledAt: true,
+            pixPaidAt: true,
+          },
+          compute(invoice) {
+            if (invoice.lightningSettledAt) return "lightning-settled";
+            if (invoice.pixPaidAt) return "completed";
+            return "pending";
+          },
+        },
+      },
+    },
+  });
 };
 
 // ==============================
