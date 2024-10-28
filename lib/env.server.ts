@@ -9,6 +9,8 @@ export const {
   LNBITS_ADMIN_KEY,
   LNBITS_INVOICE_READ_KEY,
   LNBITS_ENDPOINT,
+  PUSHER_APP_ID,
+  PUSHER_SECRET,
 } = createEnv({
   // Skip server env validation during build
   skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
@@ -20,6 +22,8 @@ export const {
     LNBITS_ADMIN_KEY: z.string().min(1),
     LNBITS_INVOICE_READ_KEY: z.string().min(1),
     LNBITS_ENDPOINT: z.string().min(1),
+    PUSHER_APP_ID: z.string().min(1),
+    PUSHER_SECRET: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });

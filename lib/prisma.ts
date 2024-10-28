@@ -17,8 +17,8 @@ const prismaClientSingleton = () => {
             pixPaidAt: true,
           },
           compute(invoice) {
-            if (invoice.lightningSettledAt) return "lightning-settled";
             if (invoice.pixPaidAt) return "completed";
+            if (invoice.lightningSettledAt) return "lightning-settled";
             return "pending";
           },
         },

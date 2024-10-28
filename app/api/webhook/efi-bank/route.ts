@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { WEBHOOK_SECRET } from "@/lib/env.server";
 import { getIp, validateHmac } from "@/lib/webhook";
 import { prisma } from "@/lib/prisma";
+import { pusherServer } from "@/lib/pusher.server";
 
 export const dynamic = "force-dynamic";
 
@@ -56,7 +57,7 @@ export async function POST(request: NextRequest) {
               pixTransaction.endToEndId
             );
 
-            return prisma.invoice.update({
+            const invoice = await prisma.invoice.update({
               where: {
                 pixTransactionId: pixTransaction.endToEndId,
               },
@@ -64,6 +65,14 @@ export async function POST(request: NextRequest) {
                 pixPaidAt: new Date(pixTransaction.horario),
               },
             });
+
+            await pusherServer.trigger(
+              `pix-${invoice.id}`,
+              "payment-confirmed",
+              {}
+            );
+
+            return invoice;
           })
       );
     }
