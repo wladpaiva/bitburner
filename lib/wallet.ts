@@ -18,3 +18,21 @@ export const requireWallet = async (id: string) => {
   }
   return wallet;
 };
+
+export const getWalletByUsername = async (username: string) => {
+  const wallet = await prisma.burnerWallet.findUnique({
+    where: {
+      username,
+    },
+  });
+
+  return wallet;
+};
+
+export const requireWalletByUsername = async (username: string) => {
+  const wallet = await getWalletByUsername(username);
+  if (!wallet) {
+    notFound();
+  }
+  return wallet;
+};

@@ -37,6 +37,8 @@ model Invoice {
 // Custodial temporary wallets
 model BurnerWallet {
   id          String   @id
+  /// Username for the Lightning Address (eg. `username`)
+  username    String   @unique
   name        String
   adminKey    String
   invoiceKey  String

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireWallet } from "@/lib/wallet";
+import { requireWalletByUsername } from "@/lib/wallet";
 import { getBurnerLnbits } from "@/lib/lnbits";
 import { z } from "zod";
 
@@ -9,10 +9,10 @@ const schema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ username: string }> }
 ) {
   try {
-    const { id } = await params;
+    const { username } = await params;
     const { searchParams } = new URL(request.url);
     const parsed = schema.safeParse(Object.fromEntries(searchParams));
 
@@ -27,7 +27,7 @@ export async function GET(
     const amountMsats = parsed.data.amount;
 
     // Get wallet and verify it exists
-    const wallet = await requireWallet(id);
+    const wallet = await requireWalletByUsername(username);
     const lnbits = getBurnerLnbits(wallet);
 
     const invoice = await lnbits.wallet.createInvoice({

@@ -1,6 +1,12 @@
 import { LNBITS_ADMIN_KEY, LNBITS_ENDPOINT } from "@/lib/env.server";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  adjectives,
+  animals,
+  colors,
+  uniqueNamesGenerator,
+} from "unique-names-generator";
 
 export async function GET(request: NextRequest) {
   try {
@@ -33,10 +39,17 @@ export async function GET(request: NextRequest) {
       updated_at: number;
     };
 
+    const username = uniqueNamesGenerator({
+      dictionaries: [adjectives, colors, animals],
+      separator: ".",
+      length: 2,
+    });
+
     // Save the wallet to the database
     await prisma.burnerWallet.create({
       data: {
         id: wallet.id,
+        username,
         name: wallet.name,
         adminKey: wallet.adminkey,
         invoiceKey: wallet.inkey,
