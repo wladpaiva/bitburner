@@ -30,3 +30,17 @@ model Invoice {
 
   createdAt DateTime @default(now())
 }
+
+// Custodial temporary wallets
+model BurnerWallet {
+  id          String   @id
+  name        String
+  adminKey    String
+  invoiceKey  String
+  balanceMsat Int
+  userId      String
+  currency    String?
+  deleted     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
