@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-if (process.env.NEXT_RUNTIME === "nodejs") {
-  const { server } = await import("../mocks/node");
-  server.listen({
-    onUnhandledRequest: "error",
-  });
-}
+// if (process.env.NEXT_RUNTIME === "nodejs") {
+//   const { server } = await import("../mocks/node");
+//   server.listen({
+//     onUnhandledRequest: "error",
+//   });
+// }
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
