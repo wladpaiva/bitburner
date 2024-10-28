@@ -15,7 +15,7 @@ const schema = z.object({
   // Amount in cents (BRL)
   amount: z.coerce.number(),
   pixKey: z.string(),
-  pixType: z.enum(["cpf", "cnpj", "contaBanco", "phone"]),
+  pixType: z.enum(["cpf", "cnpj", "phone"]),
 });
 
 export async function POST(request: NextRequest) {
