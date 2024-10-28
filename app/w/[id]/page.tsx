@@ -127,7 +127,7 @@ export default async function Page({
                       }
                     >
                       {transaction.type === "deposit" ? "+" : "-"}
-                      {formatSats(transaction.amount)} sats
+                      {formatSats(transaction.amount / 1000)} sats
                     </span>
                     <span className="text-gray-500 text-sm">
                       {transaction.date}
