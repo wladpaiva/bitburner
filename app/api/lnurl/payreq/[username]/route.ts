@@ -14,7 +14,9 @@ export async function GET(
   try {
     const { username } = await params;
     const { searchParams } = new URL(request.url);
-    const parsed = schema.safeParse(Object.fromEntries(searchParams));
+    const parsed = schema.safeParse({
+      amount: searchParams.get("amount"),
+    });
 
     if (!parsed.success) {
       return NextResponse.json({
@@ -32,7 +34,7 @@ export async function GET(
 
     const invoice = await lnbits.wallet.createInvoice({
       out: false,
-      amount: amountMsats,
+      amount: amountMsats / 1000,
       memo: ``,
       //   metadata: [
       //     ["text/plain", `Payment to ${wallet.username}`],
