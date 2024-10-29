@@ -5,8 +5,8 @@ import { EFI_PIX_CHAVE } from "./env.server";
 /**
  * Transfer money to a pix key.
  *
- * @param favorecido - The recipient of the pix payment.
- * @param amount - The amount to be paid in Brazilian Real (BRL).
+ * @param favorecido The recipient of the pix payment.
+ * @param amount The amount in cents to be paid in Brazilian Real (BRL).
  */
 export async function payPix(
   favorecido: {
@@ -23,7 +23,6 @@ export async function payPix(
     cpf?: string;
     cnpj?: string;
   },
-  /// Amount in cents BRL
   amount: number
 ) {
   const result = await efibank.pixSend(
