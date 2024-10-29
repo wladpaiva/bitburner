@@ -136,7 +136,12 @@ export default function PixPage() {
                 )}
               />
 
-              <SubmitButton className="w-full">Pay Pix</SubmitButton>
+              <SubmitButton
+                pending={form.formState.isSubmitting}
+                className="w-full"
+              >
+                Pay Pix
+              </SubmitButton>
             </form>
           </Form>
         </CardContent>

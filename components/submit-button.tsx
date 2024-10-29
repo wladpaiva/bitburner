@@ -1,37 +1,41 @@
-'use client'
+"use client";
 
-import {forwardRef} from 'react'
-import {Spinner} from '@/components/icons'
-import {Button, ButtonProps} from '@/components/ui/button'
-import {cn} from '@/lib/utils'
-import {useFormStatus} from 'react-dom'
+import { forwardRef } from "react";
+import { useFormStatus } from "react-dom";
 
-export type SubmitButtonProps = Omit<ButtonProps, 'type' | 'aria-disabled'>
+import { cn } from "@/lib/utils";
+import { Button, ButtonProps } from "@/components/ui/button";
+import { Spinner } from "@/components/icons";
+
+export type SubmitButtonProps = Omit<ButtonProps, "type" | "aria-disabled"> & {
+  pending?: boolean;
+};
 
 const SubmitButton = forwardRef<HTMLButtonElement, SubmitButtonProps>(
-  ({children, className, disabled, ...rest}, ref) => {
-    const {pending} = useFormStatus()
-    const isDisabled = disabled || pending
-
+  ({ children, className, pending, ...rest }, ref) => {
+    const { pending: formPending } = useFormStatus();
+    const isPending = pending || formPending;
     return (
       <Button
         {...rest}
-        disabled={isDisabled}
+        disabled={isPending}
         type="submit"
-        aria-disabled={isDisabled}
+        aria-disabled={isPending}
         ref={ref}
-        className={cn('relative', className)}
+        className={cn("relative", className)}
       >
-        {pending && (
+        {isPending && (
           <div className="absolute inset-0 flex items-center justify-center">
             <Spinner className="h-4 w-4 animate-spin" />
           </div>
         )}
-        <div className={cn(pending ? 'opacity-0' : 'contents')}>{children}</div>
+        <div className={cn(isPending ? "opacity-0" : "contents")}>
+          {children}
+        </div>
       </Button>
-    )
-  },
-)
-SubmitButton.displayName = 'SubmitButton'
+    );
+  }
+);
+SubmitButton.displayName = "SubmitButton";
 
-export {SubmitButton}
+export { SubmitButton };
